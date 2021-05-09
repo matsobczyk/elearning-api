@@ -5,11 +5,13 @@ const Invitation = require('../models/Invitation');
 
 exports.createInvitation = (async (req, res) => {
     var salt = await bcrypt.genSalt(10);
+    const token = jwt.sign(salt, process.env.TOKEN_SECRETInv);
     const invitation = new Invitation ({
                 name: req.body.name,
-                inv: salt
+                inv: token
             });
             try {
+                console.log(salt);
                 const savedInvitation = await invitation.save();
                 res.send(savedInvitation);
             }catch(err){

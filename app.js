@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+const auth = require('./middlewares/auth');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -22,13 +23,18 @@ try {
     console.log(error);
 }
 
-
+const adminRoute = require('./routes/admin');
 const authRoute = require('./routes/auth');
 app.use('/auth', authRoute);
+app.use('/admin', adminRoute);
 
 app.get('/', (req, res) => {
     const request = req.body.message;
     res.json('Hello, your message is '+ request);
+})
+
+app.get('/user', auth.authUser, (req, res) => {
+    res.json('Hello, your message is User');
 })
 
 app.listen(3000);

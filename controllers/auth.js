@@ -26,13 +26,13 @@ exports.register = (async (req, res) => {
         password: hashPassword,
         date: req.body.date,
     });
-    // try {
-    //     const savedUser = await user.save();
-    //     res.send({user: user._id});
-    //     mailing.send_account_creation_email(user);//sending mail on account creation
-    // }catch(err){
-    //     res.status(400).send(err);
-    // }
+    try {
+        const savedUser = await user.save();
+        res.send({user: user._id});
+        // mailing.send_account_creation_email(user);//sending mail on account creation
+    }catch(err){
+        res.status(400).send(err);
+    }
 });
 
 //login User
