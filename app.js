@@ -23,6 +23,9 @@ try {
 }
 
 
+const authRoute = require('./routes/auth');
+app.use('/auth', authRoute);
+
 app.get('/', (req, res) => {
     const request = req.body.message;
     res.json('Hello, your message is '+ request);
