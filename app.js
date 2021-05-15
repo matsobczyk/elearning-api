@@ -12,6 +12,8 @@ const auth = require('./middlewares/auth');
 
 const dotenv = require('dotenv');
 dotenv.config();
+const answersRoute = require('./routes/answer');
+app.use('/answer', answersRoute);
 
 try {
     mongoose.connect(
