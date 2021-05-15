@@ -9,10 +9,10 @@ router.post('/register/check',invitationController.checkInvitation);
 //login user
 router.post('/login', AuthController.login);
 
-//register admin
-router.post('/registerAdmin', AuthController.registerAdmin);
-//login admin
-router.post('/loginAdmin', AuthController.loginAdmin);
+//register teacher
+router.post('/registerTeacher', AuthController.registerTeacher);
+//login teacher
+router.post('/loginTeacher', AuthController.loginTeacher);
 
 
 module.exports = router;

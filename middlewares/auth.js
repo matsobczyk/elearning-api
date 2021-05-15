@@ -14,13 +14,13 @@ const authUser = (req, res, next) => {
 }
 
 
-const authAdmin = (req, res, next) => {
+const authTeacher = (req, res, next) => {
     const token =  req.header('auth-token');
     if(!token) return res.status(400).send('Acces Denied!');
 
     try{
-        const verified = jwt.verify(token, process.env.TOKEN_SECRETAdmin);
-        req.admin = verified;
+        const verified = jwt.verify(token, process.env.TOKEN_SECRETTeacher);
+        req.teacher = verified;
         next();
     }catch(err){
         res.status(400).send('Invalid auth token');
@@ -28,4 +28,4 @@ const authAdmin = (req, res, next) => {
 }
 
 module.exports.authUser = authUser;
-module.exports.authAdmin = authAdmin;
+module.exports.authTeacher = authTeacher;

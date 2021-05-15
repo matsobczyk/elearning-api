@@ -23,10 +23,10 @@ try {
     console.log(error);
 }
 
-const adminRoute = require('./routes/admin');
+const teacherRoute = require('./routes/teacher');
 const authRoute = require('./routes/auth');
 app.use('/auth', authRoute);
-app.use('/admin', adminRoute);
+app.use('/teacher', teacherRoute);
 
 app.get('/', (req, res) => {
     const request = req.body.message;

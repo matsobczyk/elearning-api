@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Admin = require('../models/Admin');
+const Teacher = require('../models/Teacher');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {registerValidation, loginValidation} = require('../middlewares/validation')
@@ -54,50 +54,50 @@ exports.login = (async (req, res) => {
     res.header('auth-token', token).send(token);
 });
 
-//register Admin
-exports.registerAdmin = (async (req, res) => {
+//register Teacher
+exports.registerTeacher = (async (req, res) => {
     //data validation
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     
     //check if email is already in database
-    const emailExist = await Admin.findOne({email: req.body.email});
+    const emailExist = await Teacher.findOne({email: req.body.email});
     if(emailExist) return res.status(400).send('Email already in database!');
 
     //hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-    const admin = new Admin ({
+    const teacher = new Teacher ({
         name: req.body.name,
         email: req.body.email,
         password: hashPassword,
         date: req.body.date,
     });
     try {
-        const savedAdmin = await admin.save();
-        res.send({admin: savedAdmin._id});
-        // mailing.send_account_creation_email(admin);//sending mail on account creation
+        const savedTeacher = await teacher.save();
+        res.send({teacher: savedTeacher._id});
+        // mailing.send_account_creation_email(teacher);//sending mail on account creation
     }catch(err){
         res.status(400).send(err);
     }
 });
 
-//login Admin
-exports.loginAdmin = (async (req, res) => {
+//login Teacher
+exports.loginTeacher = (async (req, res) => {
     //validation
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     //checking if email does not exists
-    const admin = await Admin.findOne({ email: req.body.email});
-    if (!admin) return res.status(400).send('Email not found');
+    const teacher = await Teacher.findOne({ email: req.body.email});
+    if (!teacher) return res.status(400).send('Email not found');
 
     //checking if password is correct
-    const validPass = await bcrypt.compare(req.body.password, admin.password);
+    const validPass = await bcrypt.compare(req.body.password, teacher.password);
     if(!validPass) return res.status(400).send('Invalid password');
 
     //create and assign a token
-    const token = jwt.sign({_id: admin._id}, process.env.TOKEN_SECRETAdmin);
+    const token = jwt.sign({_id: teacher._id}, process.env.TOKEN_SECRETTeacher);
     res.header('auth-token', token).send(token);
 });
