@@ -35,8 +35,13 @@ app.get('/', (req, res) => {
     res.json('Hello, your message is '+ request);
 })
 
-app.get('/user', auth.authUser, (req, res) => {
-    res.json('Hello, your message is User');
+app.get('/user', auth.authAny, (req, res) => {
+    if(!req.teacher){
+        res.json(req.user);
+    }else{
+        res.json(req.teacher);
+    }
+    
 })
 
 app.listen(3000);
