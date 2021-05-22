@@ -14,12 +14,16 @@ const Answer = new mongoose.Schema({
         type: String,
         required: true
     },
+    testId: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now
     },
     answers: {
-        type: Answers,
+        type: [Answers],
         required: true
     },
 })

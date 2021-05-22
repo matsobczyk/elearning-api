@@ -10,7 +10,8 @@ exports.getAnswer = async (req, res) => {
 }
 exports.createAnswer = async (req, res) => {
     const answer = new Answer ({
-        author : req.body.author,
+        author : req.user,
+        testId: req.body.testId,
         answers  : req.body.answers
     });
     try {
@@ -21,12 +22,12 @@ exports.createAnswer = async (req, res) => {
     }
 
 }
-//TODO: fix, returns empty object
+//TODO: update author, req.user returns null
 exports.updateAnswer = async (req, res) => {
     try{
-        const updatedAnswer = await Anser.updateOne(
-            {id: req.params.answerId}, 
-            {$set: {answers: req.body.answers}}
+        const updatedAnswer = await Answer.findByIdAndUpdate(
+            req.params.answerId, 
+            {$set: {answers: req.body.answers, date: Date.now()}}
             );
         res.json(updatedAnswer);
     }catch(err){
@@ -35,5 +36,10 @@ exports.updateAnswer = async (req, res) => {
 }
 //TODO: 
 exports.deleteAnswer = async (req, res) => {
-    res.json('deleteAnswers')
+    try{
+        const deletedAnswer = await Answer.findByIdAndDelete(req.params.answerId);
+        res.json(deletedAnswer);
+    }catch(err){
+        res.json(err);
+    }
 }
