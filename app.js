@@ -27,8 +27,10 @@ try {
 
 const teacherRoute = require('./routes/teacher');
 const authRoute = require('./routes/auth');
+const testRoute = require('./routes/test');
 app.use('/auth', authRoute);
 app.use('/teacher', teacherRoute);
+app.use('/test', testRoute);
 
 app.get('/', (req, res) => {
     const request = req.body.message;
