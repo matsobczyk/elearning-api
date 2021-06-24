@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-const Questions = new mongoose.Schema({
+
+
+
+const Question = new mongoose.Schema({
     question: { 
         type: String,
         required: true
@@ -25,7 +28,7 @@ const Test = new mongoose.Schema({
         required: true
     },
     questions: {
-        type: [Questions],
+        type: [[Question]],
         required: true
     },
     date: {
